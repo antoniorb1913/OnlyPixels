@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Discos</title>
+    <link href="estilos/estilos.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>🎨 Generador de Contenido Maldito 🎨</h1>
+        
+        <div class="controls">
+            <div class="control-group">
+                <label for="curse-level">Nivel de Maldición:</label>
+                <select id="curse-level">
+                    <option value="1">1 - Ligero</option>
+                    <option value="2">2 - Suave</option>
+                    <option value="3">3 - Moderado</option>
+                    <option value="4">4 - Notable</option>
+                    <option value="5" selected>5 - Maldito</option>
+                    <option value="6">6 - Muy Maldito</option>
+                    <option value="7">7 - Extremo</option>
+                    <option value="8">8 - Catastrófico</option>
+                    <option value="9">9 - Apocalíptico</option>
+                    <option value="10">10 - FIN DEL MUNDO</option>
+                </select>
+            </div>
+            
+            <div class="control-group">
+                <button id="generate-btn">Generar Contenido</button>
+                <button id="worsen-btn">Empeorar</button>
+                <button id="save-btn">Guardar (con sonido)</button>
+                <button id="mode-2003-btn">Modo Año 2003</button>
+            </div>
+        </div>
+        
+        <div class="content-area" id="content-area">
+            <div class="generated-text" id="generated-text">
+                Haz clic en "Generar Contenido" para comenzar
+            </div>
+            <div id="image-container"></div>
+            <div class="emojis-container" id="emojis-container"></div>
+        </div>
+    </div>
+    
+    <div class="notification" id="notification">
+        ¡Contenido guardado con éxito!
+    </div>
+
+    <audio id="error-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-windows-error-2576.mp3" preload="auto"></audio>
+    <audio id="messenger-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3" preload="auto"></audio>
+    <audio id="disco-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-extra-bonus-2063.mp3" preload="auto"></audio>
+</body>
+</html>
