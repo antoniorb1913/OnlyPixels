@@ -1,34 +1,58 @@
 /* Estilos generales */
 body {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif !important;
     background-color: #f0e6d6;
     margin: 0;
     padding: 20px;
-    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9IiNmMGU2ZDYiLz48cGF0aCBkPSJNMCAwTDEwMCAxMDBaIiBzdHJva2U9IiNlOGQ5YzAiIHN0cm9rZS13aWR0aD0iMSIvPjxwYXRoIGQ9Ik0xMDAgMEwwIDEwMFoiIHN0cm9rZT0iI2U4ZDljMCIgc3Ryb2tlLXdpZHRoPSIxIi8+PC9zdmc+');
+    background-image: url('../imagenes/xp.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
     color: #333;
+}
+
+/* Asegurar que todos los elementos usen Comic Sans */
+* {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 .container {
     max-width: 800px;
     margin: 0 auto;
-    background-color: white;
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 20px;
     border: 8px ridge #ff9900;
     box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(2px);
+}
+
+header {
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 h1 {
     text-align: center;
-    font-size: 36px;
-    margin-bottom: 20px;
+    font-size: 42px;
+    margin-bottom: 10px;
     text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #ff9900, 9px 9px 0 #ffff00, 12px 12px 0 #00ff00, 15px 15px 0 #0000ff, 18px 18px 0 #4b0082, 21px 21px 0 #8f00ff;
     color: #ff00ff;
+    animation: titleFloat 3s ease-in-out infinite;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
-h2 {
-    color: #ff6600;
-    border-bottom: 2px dashed #ff6600;
-    padding-bottom: 5px;
+@keyframes titleFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+}
+
+.subtitle {
+    text-align: center;
+    font-style: italic;
+    color: #666;
+    margin-bottom: 20px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 /* Estilos para controles */
@@ -37,37 +61,47 @@ h2 {
     padding: 15px;
     border: 3px dotted #ff6600;
     margin-bottom: 20px;
+    border-radius: 15px;
 }
 
 .control-group {
     margin-bottom: 15px;
 }
 
+.button-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
 label {
     display: block;
     margin-bottom: 5px;
     font-weight: bold;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
-select, button {
-    font-family: 'Comic Sans MS', cursive, sans-serif;
+select, button, input {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
     padding: 8px;
     border: 2px solid #ff6600;
     background-color: #ffffcc;
     font-size: 16px;
     cursor: pointer;
+    border-radius: 5px;
 }
 
 button {
     background-color: #ffcc00;
     font-weight: bold;
-    margin-right: 10px;
     transition: all 0.3s;
+    flex: 1;
+    min-width: 120px;
 }
 
 button:hover {
     background-color: #ff9900;
-    transform: scale(1.05);
+    transform: scale(1.05) rotate(2deg);
 }
 
 /* Estilos para el contenido generado */
@@ -78,18 +112,23 @@ button:hover {
     min-height: 300px;
     position: relative;
     overflow: hidden;
+    border-radius: 10px;
 }
 
 .generated-text {
     font-size: 20px;
     line-height: 1.5;
     margin-bottom: 20px;
+    text-align: center;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 .generated-image {
     max-width: 100%;
     border: 5px ridge #00ffff;
-    margin: 10px 0;
+    margin: 10px auto;
+    display: block;
+    transition: all 0.5s;
 }
 
 .emojis-container {
@@ -106,6 +145,7 @@ button:hover {
     font-size: 30px;
     opacity: 0.5;
     animation: float 5s infinite ease-in-out;
+    z-index: 10;
 }
 
 @keyframes float {
@@ -126,9 +166,15 @@ button:hover {
     clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
 }
 
+.extreme-curse {
+    filter: sepia(100%) hue-rotate(90deg) blur(2px) contrast(200%);
+    transform: scale(0.9) rotate(5deg);
+}
+
 /* Estilos para el modo disco */
 .disco-mode {
     animation: discoBackground 0.5s infinite;
+    background-image: none !important;
 }
 
 @keyframes discoBackground {
@@ -142,6 +188,7 @@ button:hover {
 
 .disco-text {
     animation: discoText 0.3s infinite;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
 }
 
 @keyframes discoText {
@@ -159,6 +206,12 @@ button:hover {
     image-rendering: pixelated;
 }
 
+.mode-2003 .generated-image {
+    width: 300px;
+    height: 200px;
+    object-fit: cover;
+}
+
 /* Notificación */
 .notification {
     position: fixed;
@@ -170,4 +223,214 @@ button:hover {
     font-weight: bold;
     display: none;
     z-index: 1000;
+    border-radius: 5px;
+    animation: notificationPop 0.5s;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+
+@keyframes notificationPop {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Footer */
+.site-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+    color: #666;
+    border-top: 1px dashed #ccc;
+    padding-top: 10px;
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif;
+}
+
+/* Efectos especiales para niveles altos de maldición */
+.curse-level-8 .generated-text {
+    animation: textShake 0.1s infinite;
+}
+
+@keyframes textShake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-2px); }
+    75% { transform: translateX(2px); }
+}
+
+.curse-level-10 .content-area {
+    animation: areaPulse 1s infinite;
+}
+
+@keyframes areaPulse {
+    0%, 100% { border-color: #ff00ff; }
+    50% { border-color: #00ffff; }
+}
+
+/* Asegurar que los botones mantengan Comic Sans al pasar el ratón */
+button:hover, select:hover, input:hover {
+    font-family: 'Comic Sans MS', 'Comic Sans', cursive, sans-serif !important;
+}
+
+/* Estilos para el botón de subir imagen */
+#upload-btn {
+    background-color: #00cc66;
+    color: white;
+}
+
+#upload-btn:hover {
+    background-color: #00aa55;
+}
+
+/* Estilos para la previsualización de imagen subida */
+#upload-preview {
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+/* Estilo para indicar que es una imagen subida */
+.generated-text::after {
+    content: "";
+    display: inline-block;
+    margin-left: 5px;
+}
+
+/* Responsive para imágenes */
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+    }
+    
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .generated-image {
+        max-width: 90%;
+    }
+}
+
+/* Estilos para el botón de subir imagen */
+#upload-btn {
+    background-color: #00cc66;
+    color: white;
+    width: 100%;
+}
+
+#upload-btn:hover {
+    background-color: #00aa55;
+}
+
+/* Contenedor para el input file */
+.file-input-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+    flex: 1;
+    min-width: 120px;
+}
+
+.file-input-wrapper input[type=file] {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+
+/* Estilos para la previsualización de imagen subida */
+#upload-preview {
+    margin-top: 10px;
+    text-align: center;
+    font-style: italic;
+    color: #666;
+}
+
+/* Estilo para indicar que es una imagen subida */
+.generated-text::after {
+    content: "";
+    display: inline-block;
+    margin-left: 5px;
+}
+
+/* Responsive para imágenes */
+@media (max-width: 600px) {
+    .button-group {
+        flex-direction: column;
+    }
+    
+    button, .file-input-wrapper {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .generated-image {
+        max-width: 90%;
+    }
+}
+
+/* Asegurar que la imagen sea visible */
+.generated-image {
+    max-width: 100%;
+    border: 5px ridge #00ffff;
+    margin: 10px auto;
+    display: block;
+    transition: all 0.5s;
+    position: relative;
+    z-index: 2;
+    background-color: white; /* Fondo blanco para transparencias */
+}
+
+/* Asegurar que el contenedor de imágenes sea visible */
+#image-container {
+    min-height: 200px;
+    text-align: center;
+    position: relative;
+    z-index: 1;
+}
+
+/* Ajustar los emojis para que no tapen la imagen */
+.emojis-container {
+    z-index: 3;
+}
+
+.emoji {
+    z-index: 3;
+}
+
+/* Estilos para el botón de reset */
+#reset-btn {
+    background-color: #9966ff;
+    color: white;
+    width: 100%;
+}
+
+#reset-btn:hover {
+    background-color: #7744cc;
+}
+
+/* Estilos para imágenes cargadas */
+.uploaded-indicator {
+    display: inline-block;
+    background-color: #00cc66;
+    color: white;
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+/* Contenedor para debug */
+.debug-info {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0,0,0,0.7);
+    color: white;
+    padding: 5px;
+    font-size: 10px;
+    display: none;
 }

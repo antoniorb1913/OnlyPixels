@@ -1,4 +1,3 @@
-
 // Arrays con contenido para generar
 const phrases = [
     "El gato existential en el limbo digital",
@@ -8,15 +7,18 @@ const phrases = [
     "Los zapatos voladores navegan por el hipervínculo roto",
     "El silencio tiene el color de un blue screen of death",
     "Las nubes son servidores que almacenan sueños",
-    "El tiempo es un bucle recursivo sin condición de salida"
+    "El tiempo es un bucle recursivo sin condición de salida",
+    "El router emite señales del más allá",
+    "El cargador USB alimenta esperanzas perdidas"
 ];
 
-const emojis = ["😀", "😂", "🤣", "😍", "🤔", "🙄", "😎", "🥳", "😱", "👻", "💀", "👾", "🤖", "🎃", "💩", "👁️", "🧠", "👁️‍🗨️"];
+const emojis = ["😀", "😂", "🤣", "😍", "🤔", "🙄", "😎", "🥳", "😱", "👻", "💀", "👾", "🤖", "🎃", "💩", "👁️", "🧠"];
 
 // Variables de estado
 let curseLevel = 5;
 let currentMode = "normal";
 let discoModeActive = false;
+let uploadedImage = null;
 
 // Elementos DOM
 const curseLevelSelect = document.getElementById('curse-level');
@@ -24,6 +26,7 @@ const generateBtn = document.getElementById('generate-btn');
 const worsenBtn = document.getElementById('worsen-btn');
 const saveBtn = document.getElementById('save-btn');
 const mode2003Btn = document.getElementById('mode-2003-btn');
+const imageUpload = document.getElementById('image-upload');
 const contentArea = document.getElementById('content-area');
 const generatedText = document.getElementById('generated-text');
 const imageContainer = document.getElementById('image-container');
@@ -39,6 +42,7 @@ generateBtn.addEventListener('click', generateContent);
 worsenBtn.addEventListener('click', worsenContent);
 saveBtn.addEventListener('click', saveContent);
 mode2003Btn.addEventListener('click', toggle2003Mode);
+imageUpload.addEventListener('change', handleImageUpload);
 document.addEventListener('keydown', handleKonamiCode);
 
 // Variables para el código Konami
@@ -49,6 +53,21 @@ const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLe
 function updateCurseLevel() {
     curseLevel = parseInt(curseLevelSelect.value);
     messengerSound.play();
+    updateCurseEffects();
+    applyEffects();
+}
+
+function updateCurseEffects() {
+    // Remover clases anteriores
+    contentArea.classList.remove('curse-level-8', 'curse-level-10');
+    
+    // Aplicar efectos especiales para niveles altos
+    if (curseLevel >= 8) {
+        contentArea.classList.add('curse-level-8');
+    }
+    if (curseLevel >= 10) {
+        contentArea.classList.add('curse-level-10');
+    }
 }
 
 function generateContent() {
@@ -56,8 +75,10 @@ function generateContent() {
     const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
     generatedText.textContent = randomPhrase;
     
-    // Generar imagen
-    generateImage();
+    // Si no hay imagen subida, generar una aleatoria
+    if (!uploadedImage) {
+        generateRandomImage();
+    }
     
     // Generar emojis
     generateEmojis();
@@ -68,16 +89,91 @@ function generateContent() {
     messengerSound.play();
 }
 
-function generateImage() {
+function generateRandomImage() {
     // Limpiar contenedor de imágenes
     imageContainer.innerHTML = '';
     
-    // Crear imagen
+    // Crear imagen aleatoria
     const img = document.createElement('img');
     img.src = `https://picsum.photos/400/300?random=${Math.floor(Math.random() * 1000)}`;
     img.alt = "Imagen generada aleatoriamente";
     img.className = 'generated-image';
+    img.id = 'current-image';
+    imageContainer.appendChild(img);
+}
+
+function handleImageUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
     
+    // Verificar que sea una imagen
+    if (!file.type.match('image.*')) {
+        showNotification('⚠️ Error: Por favor, sube solo archivos de imagen.');
+        return;
+    }
+    
+    // Verificar tamaño (máximo 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+        showNotification('⚠️ Error: La imagen es muy grande (máximo 5MB)');
+        return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        // Guardar la imagen subida
+        uploadedImage = e.target.result;
+        
+        // Actualizar texto
+        const randomPhrase = phrases[Math.floor(Math.random() * phrases.length)];
+        generatedText.textContent = randomPhrase + " 🆕";
+        
+        // Mostrar la imagen subida
+        displayUploadedImage();
+        
+        // Generar emojis
+        generateEmojis();
+        
+        // Aplicar efectos
+        applyEffects();
+        
+        // Mostrar notificación
+        showNotification('✅ ¡Imagen subida con éxito!');
+        
+        // Reproducir sonido
+        messengerSound.play();
+    };
+    
+    reader.onerror = function() {
+        showNotification('⚠️ Error al leer la imagen');
+    };
+    
+    reader.readAsDataURL(file);
+    
+    // Resetear el input para permitir subir la misma imagen otra vez
+    event.target.value = '';
+}
+
+function displayUploadedImage() {
+    if (!uploadedImage) return;
+    
+    // Limpiar contenedor de imágenes
+    imageContainer.innerHTML = '';
+    
+    // Crear imagen con la subida
+    const img = document.createElement('img');
+    img.src = uploadedImage;
+    img.alt = "Imagen subida por el usuario";
+    img.className = 'generated-image';
+    img.id = 'current-image';
+    img.onload = function() {
+        console.log('Imagen cargada correctamente:', this.src);
+        // Forzar la aplicación de efectos
+        applyEffects();
+    };
+    img.onerror = function() {
+        console.error('Error al cargar la imagen');
+        showNotification('❌ Error al cargar la imagen');
+    };
     imageContainer.appendChild(img);
 }
 
@@ -100,6 +196,13 @@ function generateEmojis() {
         // Rotación aleatoria
         emoji.style.transform = `rotate(${Math.random() * 360}deg)`;
         
+        // Tamaño aleatorio
+        const size = 20 + Math.random() * 30;
+        emoji.style.fontSize = `${size}px`;
+        
+        // Animación delay aleatorio
+        emoji.style.animationDelay = `${Math.random() * 2}s`;
+        
         emojisContainer.appendChild(emoji);
     }
 }
@@ -109,7 +212,11 @@ function applyEffects() {
     
     // Aplicar efectos según el nivel de maldición
     images.forEach(img => {
-        // Siempre aplicar sepia y compresión JPEG
+        // Resetear estilos
+        img.style.filter = '';
+        img.className = 'generated-image';
+        
+        // Siempre aplicar efectos base
         img.classList.add('sepia', 'pixelated');
         
         // Efectos adicionales según el nivel
@@ -127,13 +234,17 @@ function applyEffects() {
         
         if (curseLevel >= 10) {
             img.style.filter += ' blur(2px)';
+            img.classList.add('extreme-curse');
         }
     });
     
     // Aplicar efectos al texto
+    generatedText.style.textShadow = '';
     if (curseLevel >= 7) {
         generatedText.style.textShadow = '0 0 10px #ff00ff, 0 0 20px #ff00ff';
     }
+    
+    updateCurseEffects();
 }
 
 function worsenContent() {
@@ -154,24 +265,35 @@ function worsenContent() {
 
 function saveContent() {
     // Mostrar notificación
+    showNotification('💾 ¡Contenido guardado en la memoria cósmica!');
+    
+    // Reproducir sonido de error
+    errorSound.play();
+    
+    // Efecto visual adicional
+    contentArea.style.transform = 'scale(0.95)';
+    setTimeout(() => {
+        contentArea.style.transform = 'scale(1)';
+    }, 200);
+}
+
+function showNotification(message) {
+    notification.textContent = message;
     notification.style.display = 'block';
     setTimeout(() => {
         notification.style.display = 'none';
-    }, 2000);
-    
-    // Reproducir sonido de error de Windows 95
-    errorSound.play();
+    }, 3000);
 }
 
 function toggle2003Mode() {
     if (currentMode === "normal") {
         contentArea.classList.add('mode-2003');
         currentMode = "2003";
-        mode2003Btn.textContent = "Modo Normal";
+        mode2003Btn.textContent = "🕹️ Volver a Normal";
     } else {
         contentArea.classList.remove('mode-2003');
         currentMode = "normal";
-        mode2003Btn.textContent = "Modo Año 2003";
+        mode2003Btn.textContent = "🕹️ Modo Año 2003";
     }
     
     messengerSound.play();
@@ -197,6 +319,12 @@ function activateDiscoMode() {
         generatedText.classList.add('disco-text');
         discoModeActive = true;
         
+        // Hacer que los emojis bailen
+        const allEmojis = document.querySelectorAll('.emoji');
+        allEmojis.forEach(emoji => {
+            emoji.style.animation = 'discoText 0.3s infinite, float 1s infinite ease-in-out';
+        });
+        
         // Reproducir sonido disco
         discoSound.play();
         
@@ -204,7 +332,51 @@ function activateDiscoMode() {
         setTimeout(() => {
             document.body.classList.remove('disco-mode');
             generatedText.classList.remove('disco-text');
+            const allEmojis = document.querySelectorAll('.emoji');
+            allEmojis.forEach(emoji => {
+                emoji.style.animation = 'float 5s infinite ease-in-out';
+            });
             discoModeActive = false;
         }, 10000);
     }
+}
+
+// Función para resetear a imagen aleatoria
+function resetToRandomImage() {
+    uploadedImage = null;
+    generateRandomImage();
+    generateEmojis();
+    applyEffects();
+    showNotification('🔄 Cambiado a imagen aleatoria');
+    messengerSound.play();
+}
+
+// Inicialización
+updateCurseEffects();
+
+// Inicializar con una imagen aleatoria
+setTimeout(() => {
+    generateRandomImage();
+    generateEmojis();
+    applyEffects();
+}, 100);
+
+// Añadir botón para resetear a imagen aleatoria
+const resetBtn = document.createElement('button');
+resetBtn.textContent = '🔄 Volver a Imagen Aleatoria';
+resetBtn.id = 'reset-btn';
+resetBtn.style.backgroundColor = '#9966ff';
+resetBtn.style.marginTop = '10px';
+
+resetBtn.addEventListener('click', resetToRandomImage);
+
+// Insertar botón de reset después del grupo de botones
+const buttonGroup = document.querySelector('.button-group');
+if (buttonGroup && buttonGroup.parentNode) {
+    buttonGroup.parentNode.insertBefore(resetBtn, buttonGroup.nextSibling);
+}
+
+// Asegurar que el contenedor de imágenes tenga contenido inicial
+if (!imageContainer.innerHTML.trim()) {
+    generateRandomImage();
 }
