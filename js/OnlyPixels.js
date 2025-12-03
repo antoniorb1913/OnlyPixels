@@ -380,3 +380,72 @@ if (buttonGroup && buttonGroup.parentNode) {
 if (!imageContainer.innerHTML.trim()) {
     generateRandomImage();
 }
+// Retraso para activar el salvapantallas (5000 milisegundos = 5 segundos)
+const SCREENSAVER_DELAY = 5000; 
+let timeoutId;
+
+// Referencias a los elementos del DOM
+const screensaverDiv = document.getElementById('video-screensaver');
+const videoPlayer = document.getElementById('screensaver-video-player');
+
+/**
+ * Muestra el salvapantallas (video) y lo reproduce.
+ */
+function showScreensaver() {
+    console.log('--- Activando Salvapantallas ---');
+    screensaverDiv.classList.add('active');
+    // Intentar reproducir el video. 
+    // Debe estar "muted" para evitar problemas de permisos de auto-reproducción en navegadores.
+    videoPlayer.play().catch(error => {
+        console.error('Error al intentar reproducir el video:', error);
+        // Si falla la reproducción, asegura que al menos el div esté visible.
+    });
+}
+
+/**
+ * Oculta el salvapantallas (video) y pausa la reproducción.
+ */
+function hideScreensaver() {
+    if (screensaverDiv.classList.contains('active')) {
+        console.log('--- Desactivando Salvapantallas por movimiento ---');
+        screensaverDiv.classList.remove('active');
+        videoPlayer.pause();
+        // Opcional: rebobinar el video al inicio
+        videoPlayer.currentTime = 0; 
+    }
+}
+
+/**
+ * Restablece el temporizador de inactividad. 
+ * Se llama cada vez que hay movimiento del ratón o se presiona una tecla.
+ */
+function resetTimer() {
+    // 1. Ocultar el salvapantallas si está activo
+    hideScreensaver();
+    
+    // 2. Limpiar el temporizador anterior
+    clearTimeout(timeoutId);
+    
+    // 3. Establecer un nuevo temporizador
+    timeoutId = setTimeout(showScreensaver, SCREENSAVER_DELAY);
+}
+
+// --- Inicialización y Event Listeners ---
+
+// Es fundamental esperar a que el documento se haya cargado completamente 
+// antes de intentar acceder a los elementos del DOM.
+document.addEventListener('DOMContentLoaded', () => {
+    // Llamada inicial para empezar el conteo al cargar la página
+    resetTimer();
+
+    // Escuchar el movimiento del ratón en todo el documento para reiniciar el temporizador
+    document.addEventListener('mousemove', resetTimer);
+
+    // Escuchar eventos de teclado si quieres que cualquier tecla lo desactive también:
+    document.addEventListener('keypress', resetTimer);
+
+    // Opcional: Pre-cargar el video
+    videoPlayer.load();
+
+    console.log(`Salvapaantallas inicializado. Retraso: ${SCREENSAVER_DELAY / 1000} segundos.`);
+});
