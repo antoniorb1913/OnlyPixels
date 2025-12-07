@@ -101,12 +101,11 @@ function generateRandomImage() {
     
     // Lista de imágenes locales en tu carpeta
     const localImages = [
-        'carlos.jpg',
-        'antonio.jpg',
-        'final.jpg',
-        'perro.jpeg',
-        'xp.jpg',
-        'logo_messenger.png'
+        'maldito1.png',
+        'maldito2.png',
+        'maldito3.png',
+        'maldito4.png',
+        'maldito5.png'
     ];
     
     // Seleccionar una imagen aleatoria de la lista
@@ -515,14 +514,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Tus mensajes exactos
 const mensajesMessenger = [
-    { sender: "final_2003", message: "¡Achooo! examen mañana que pereza", time: "16:42" },
-    { sender: "~Carlos~", message: "oye, me puedes pasar las consultas? que no las he hecho XD", time: "17:30" },
-    { sender: "[Klar@~", message: "¿viste lo que puso en su estado? 😱", time: "19:20" },
-    { sender: "Martuki", message: "No apruebo ingles ni pa tras", time: "20:05" },
-    { sender: "[Dani10]", message: "oye, nos comemos unas pipsaaaaa?", time: "20:15" },
-    { sender: "IkeRi0s", message: "¿quieres pelis en dvd? 3 euros cada una, todas las novedades", time: "22:00" },
-    { sender: "modo_emo", message: "¿ya te bajaste el emule? tengo un montón de mp3s", time: "23:45" },
-    { sender: "Juan-ky", message: "me dejas playstation 2 chipeadas", time: "23:45" },
+    { sender: "final_2003", message: "¡Achooo! estos no saben hacer un puto examen bien", time: "16:42" },
+    { sender: "~Carlos~", message: "me cago en los de marketing, k no les voy a pintar el puto boton de mierda", time: "17:30" },
+    { sender: "[Klar@~", message: "a mi k mierda me importa, yo aprendi en foros", time: "19:20" },
+    { sender: "Martuki", message: "FUCK...", time: "20:05" },
+    { sender: "[Dani10]", message: "oye, nos comemos la puta pipsaaaaa o k?", time: "20:15" },
+    { sender: "IkeRi0s", message: "¿quieres pelis en dvd? 30 euros cada una, si no te gusta te jodes", time: "22:00" },
+    { sender: "modo_emo", message: "¿ya te bajaste la pelicula del emule? yo tengo ya 3 xxx", time: "23:45" },
+    { sender: "Juan-ky", message: "k no te voy a devolver la playstation 2 chipeadas", time: "23:45" },
     { sender: "onlypixels_bot", message: "¡tu contenido maldito está listo! nivel: " + curseLevel, time: "ahora" },
     { sender: "sistema_msn", message: "Usuario_ha_cambiado_su_estado_a: Conectado y listo para el caos", time: new Date().getHours() + ":" + new Date().getMinutes() }
 ];
