@@ -106,7 +106,8 @@ function generateRandomImage() {
         'final.jpg',
         'perro.jpeg',
         'xp.jpg',
-        'logo_messenger.png'
+        'logo_messenger.png',
+        'odin.jpg'
     ];
     
     // Seleccionar una imagen aleatoria de la lista
