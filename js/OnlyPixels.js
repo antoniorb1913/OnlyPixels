@@ -9,9 +9,7 @@ const phrases = [
     "Las nubes son servidores que almacenan sueños",
     "El tiempo es un bucle recursivo sin condición de salida",
     "El router emite señales del más allá",
-    "El cargador USB alimenta esperanzas perdidas",
-    "Final achooo! examen mañana que pereza",
-    "Dani dani nos comemos unas pipsasss"
+    "El cargador USB alimenta esperanzas perdidas"
 
 ];
 
@@ -101,10 +99,28 @@ function generateRandomImage() {
     // Limpiar contenedor de imágenes
     imageContainer.innerHTML = '';
     
-    // Crear imagen aleatoria
+    // Lista de imágenes locales en tu carpeta
+    const localImages = [
+        'carlos.jpg',
+        'antonio.jpg',
+        'final.jpg',
+        'perro.jpeg',
+        'xp.jpg',
+        'logo_messenger.png'
+    ];
+    
+    // Seleccionar una imagen aleatoria de la lista
+    const randomIndex = Math.floor(Math.random() * localImages.length);
+    const randomImageName = localImages[randomIndex];
+    
+    // Crear la ruta a tu carpeta de imágenes
+    // IMPORTANTE: La carpeta 'images' debe estar en la misma ubicación que tu HTML
+    const imagePath = `imagenes/${randomImageName}`;
+    
+    // Crear elemento de imagen
     const img = document.createElement('img');
-    img.src = `https://picsum.photos/400/300?random=${Math.floor(Math.random() * 1000)}`;
-    img.alt = "Imagen generada aleatoriamente";
+    img.src = imagePath;
+    img.alt = "Imagen maldita generada aleatoriamente";
     img.className = 'generated-image';
     img.id = 'current-image';
     imageContainer.appendChild(img);
@@ -116,14 +132,14 @@ function handleImageUpload(event) {
     
     // Verificar que sea una imagen
     if (!file.type.match('image.*')) {
-        showNotification('⚠️ Error: Por favor, sube solo archivos de imagen.');
+        showNotification('Error: Por favor, sube solo archivos de imagen.');
         imagenSound.play();
         return;
     }
     
     // Verificar tamaño (máximo 5MB)
     if (file.size > 5 * 1024 * 1024) {
-        showNotification('⚠️ Error: La imagen es muy grande (máximo 5MB)');
+        showNotification('Error: La imagen es muy grande (máximo 5MB)');
         imagenSound.play();
         return;
     }
@@ -147,7 +163,7 @@ function handleImageUpload(event) {
         applyEffects();
         
         // Mostrar notificación
-        showNotification('✅ ¡Imagen subida con éxito!');
+        showNotification('¡Imagen subida con éxito!');
         
         // Reproducir sonido
         messengerSound.play();
@@ -182,7 +198,7 @@ function displayUploadedImage() {
     };
     img.onerror = function() {
         console.error('Error al cargar la imagen');
-        showNotification('❌ Error al cargar la imagen');
+        showNotification('Error al cargar la imagen');
     };
     imageContainer.appendChild(img);
 }
@@ -275,7 +291,7 @@ function worsenContent() {
 
 function saveContent() {
     // Mostrar notificación
-    showNotification('💾 ¡Contenido guardado en la memoria cósmica!');
+    showNotification('¡Contenido guardado en la memoria cósmica!');
     
     // Reproducir sonido de error
     errorSound.play();
@@ -320,6 +336,7 @@ function handleKonamiCode(e) {
     // Verificar si coincide con la secuencia de Konami
     if (konamiCode.join(',') === konamiSequence.join(',')) {
         activateDiscoMode();
+
     }
 }
 
@@ -347,7 +364,7 @@ function activateDiscoMode() {
                 emoji.style.animation = 'float 5s infinite ease-in-out';
             });
             discoModeActive = false;
-        }, 10000);
+        }, 9000);
     }
 }
 
@@ -357,7 +374,7 @@ function resetToRandomImage() {
     generateRandomImage();
     generateEmojis();
     applyEffects();
-    showNotification('🔄 Cambiado a imagen aleatoria');
+    showNotification('Cambiado a imagen aleatoria');
     messengerSound.play();
 }
 
@@ -373,7 +390,7 @@ setTimeout(() => {
 
 // Añadir botón para resetear a imagen aleatoria
 const resetBtn = document.createElement('button');
-resetBtn.textContent = '🔄 Volver a Imagen Aleatoria';
+resetBtn.textContent = 'Volver a Imagen Aleatoria';
 resetBtn.id = 'reset-btn';
 resetBtn.style.backgroundColor = '#9966ff';
 resetBtn.style.marginTop = '10px';
@@ -692,7 +709,7 @@ worsenContent = function() {
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         inicializarPopups();
-        console.log("✅ Sistema de popups Messenger iniciado");
+        console.log("Sistema de popups Messenger iniciado");
     }, 2000);
 });
 
