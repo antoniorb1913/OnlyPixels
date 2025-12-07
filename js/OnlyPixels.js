@@ -38,6 +38,7 @@ const messengerSound = document.getElementById('messenger-sound');
 const nokiaSound = document.getElementById('nokia-sound');
 const tamaSound = document.getElementById('tama-sound');
 const espsound = document.getElementById('esp-sound');
+const clickSound = document.getElementById('click-sound')
 
 const imagenSound = document.getElementById('imagen-sound');
 const discoSound = document.getElementById('disco-sound');
@@ -58,7 +59,7 @@ const konamiSequence = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLe
 // Funciones
 function updateCurseLevel() {
     curseLevel = parseInt(curseLevelSelect.value);
-    messengerSound.play();
+    clickSound.play();
     updateCurseEffects();
     applyEffects();
 }
@@ -92,7 +93,7 @@ function generateContent() {
     // Aplicar efectos según el nivel de maldición
     applyEffects();
     
-    messengerSound.play();
+    clickSound.play();
 }
 
 function generateRandomImage() {
@@ -165,7 +166,7 @@ function handleImageUpload(event) {
         showNotification('¡Imagen subida con éxito!');
         
         // Reproducir sonido
-        messengerSound.play();
+        clickSound.play();
     };
     
     reader.onerror = function() {
@@ -298,17 +299,18 @@ function showNotification(message) {
 
 function toggle2003Mode() {
     if (currentMode === "normal") {
-        contentArea.classList.add('mode-2003');
+        contentArea.classList.add('mode-2003');  // <- Esto activa el CSS
         currentMode = "2003";
         mode2003Btn.textContent = "🕹️ Volver a Normal";
     } else {
-        contentArea.classList.remove('mode-2003');
+        contentArea.classList.remove('mode-2003'); // <- Esto desactiva el CSS
         currentMode = "normal";
         mode2003Btn.textContent = "🕹️ Modo Año 2003";
     }
     
     nokiaSound.play();
 }
+
 
 function handleKonamiCode(e) {
     konamiCode.push(e.code);
@@ -360,7 +362,7 @@ function resetToRandomImage() {
     generateEmojis();
     applyEffects();
     showNotification('Cambiado a imagen aleatoria');
-    messengerSound.play();
+    clickSound.play();
 }
 
 // Inicialización

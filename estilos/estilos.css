@@ -199,17 +199,18 @@ button:hover {
     100% { color: #ff00ff; }
 }
 
-/* Estilos para el modo 2003 */
-.mode-2003 {
-    max-width: 320px;
-    max-height: 240px;
-    image-rendering: pixelated;
-}
 
-.mode-2003 .generated-image {
-    width: 300px;
-    height: 200px;
-    object-fit: cover;
+.mode-2003 img {
+    /* Forzar tamaño pequeño y pixelado */
+    width: 300px !important;  /* O el tamaño que quieras */
+    height: auto !important;
+    
+    /* Pixelado extremo */
+    image-rendering: -moz-crisp-edges;
+    image-rendering: pixelated;
+    
+    /* Sin suavizado */
+    -ms-interpolation-mode: nearest-neighbor;
 }
 
 /* Notificación */
