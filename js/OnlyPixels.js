@@ -9,7 +9,10 @@ const phrases = [
     "Las nubes son servidores que almacenan sueños",
     "El tiempo es un bucle recursivo sin condición de salida",
     "El router emite señales del más allá",
-    "El cargador USB alimenta esperanzas perdidas"
+    "El cargador USB alimenta esperanzas perdidas",
+    "Final achooo! examen mañana que pereza",
+    "Dani dani nos comemos unas pipsasss"
+
 ];
 
 const emojis = ["😀", "😂", "🤣", "😍", "🤔", "🙄", "😎", "🥳", "😱", "👻", "💀", "👾", "🤖", "🎃", "💩", "👁️", "🧠"];
@@ -34,6 +37,11 @@ const emojisContainer = document.getElementById('emojis-container');
 const notification = document.getElementById('notification');
 const errorSound = document.getElementById('error-sound');
 const messengerSound = document.getElementById('messenger-sound');
+const nokiaSound = document.getElementById('nokia-sound');
+const tamaSound = document.getElementById('tama-sound');
+const espsound = document.getElementById('esp-sound');
+
+const imagenSound = document.getElementById('imagen-sound');
 const discoSound = document.getElementById('disco-sound');
 
 // Event listeners
@@ -109,12 +117,14 @@ function handleImageUpload(event) {
     // Verificar que sea una imagen
     if (!file.type.match('image.*')) {
         showNotification('⚠️ Error: Por favor, sube solo archivos de imagen.');
+        imagenSound.play();
         return;
     }
     
     // Verificar tamaño (máximo 5MB)
     if (file.size > 5 * 1024 * 1024) {
         showNotification('⚠️ Error: La imagen es muy grande (máximo 5MB)');
+        imagenSound.play();
         return;
     }
     
@@ -260,7 +270,7 @@ function worsenContent() {
     // Añadir más emojis
     generateEmojis();
     
-    errorSound.play();
+    tamaSound.play();
 }
 
 function saveContent() {
@@ -296,7 +306,7 @@ function toggle2003Mode() {
         mode2003Btn.textContent = "🕹️ Modo Año 2003";
     }
     
-    messengerSound.play();
+    nokiaSound.play();
 }
 
 function handleKonamiCode(e) {
@@ -380,72 +390,313 @@ if (buttonGroup && buttonGroup.parentNode) {
 if (!imageContainer.innerHTML.trim()) {
     generateRandomImage();
 }
-// Retraso para activar el salvapantallas (5000 milisegundos = 5 segundos)
-const SCREENSAVER_DELAY = 5000; 
-let timeoutId;
+document.addEventListener('DOMContentLoaded', () => {
+            const SCREENSAVER_DELAY = 5000; // 5000 milisegundos = 5 segundos
+            let timeoutId;
+            
+            // CRÍTICO: Las referencias al DOM se obtienen AHORA, después de que los elementos se han cargado.
+            const screensaverDiv = document.getElementById('video-screensaver');
+            const videoPlayer = document.getElementById('screensaver-video-player');
+            const notification = document.getElementById('notification');
+            const saveSound = document.getElementById('messenger-sound');
+            
+            // Comprobación de existencia para evitar errores si algo falla
+            if (!screensaverDiv || !videoPlayer) {
+                console.error("Error: Elementos de video/salvapantallas no encontrados.");
+                return; 
+            }
 
-// Referencias a los elementos del DOM
-const screensaverDiv = document.getElementById('video-screensaver');
-const videoPlayer = document.getElementById('screensaver-video-player');
+            /**
+             * Muestra el salvapantallas (video) y lo reproduce.
+             */
+            function showScreensaver() {
+                console.log('--- Activando Salvapantallas ---');
+                screensaverDiv.classList.add('active');
+                espsound.play();
+                // Intentar reproducir el video.
+                videoPlayer.play().catch(error => {
+                    console.error('Error al intentar reproducir el video:', error);
+                });
+            }
 
-/**
- * Muestra el salvapantallas (video) y lo reproduce.
- */
-function showScreensaver() {
-    console.log('--- Activando Salvapantallas ---');
-    screensaverDiv.classList.add('active');
-    // Intentar reproducir el video. 
-    // Debe estar "muted" para evitar problemas de permisos de auto-reproducción en navegadores.
-    videoPlayer.play().catch(error => {
-        console.error('Error al intentar reproducir el video:', error);
-        // Si falla la reproducción, asegura que al menos el div esté visible.
+            /**
+             * Oculta el salvapantallas (video) y pausa la reproducción.
+             */
+            function hideScreensaver() {
+                if (screensaverDiv.classList.contains('active')) {
+                    console.log('--- Desactivando Salvapantallas por movimiento ---');
+                    screensaverDiv.classList.remove('active');
+                    videoPlayer.pause();
+                    espsound.pause();
+                    espsound.currentTime = 0;
+                    videoPlayer.currentTime = 0; 
+                }
+            }
+
+            /**
+             * Restablece el temporizador de inactividad. 
+             */
+            function resetTimer() {
+                // 1. Ocultar el salvapantallas si está activo
+                hideScreensaver();
+                
+                // 2. Limpiar el temporizador anterior
+                clearTimeout(timeoutId);
+                
+                // 3. Establecer un nuevo temporizador
+                timeoutId = setTimeout(showScreensaver, SCREENSAVER_DELAY);
+            }
+
+            // --- Lógica de la Aplicación (Funciones Dummy para los botones) ---
+
+            // Función para mostrar la notificación de guardado
+            function showNotification() {
+                saveSound.play().catch(e => console.log("Error playing sound: ", e));
+                notification.classList.add('show');
+                setTimeout(() => {
+                    notification.classList.remove('show');
+                }, 3000);
+            }
+
+            // Asignar Event Listeners a los botones (para que tu app no de errores)
+            document.getElementById('generate-btn')?.addEventListener('click', () => {
+                document.getElementById('generated-text').textContent = "¡Contenido absurdo generado con nivel de maldición " + document.getElementById('curse-level').value + "!";
+            });
+            
+            document.getElementById('worsen-btn')?.addEventListener('click', () => {
+                document.getElementById('generated-text').textContent = "¡Todo empeora! 📉";
+            });
+
+            document.getElementById('save-btn')?.addEventListener('click', showNotification);
+
+            document.getElementById('mode-2003-btn')?.addEventListener('click', () => {
+                alert('¡Modo 2003 activado! (Simulado)');
+            });
+
+            // Lógica para el botón de subir imagen
+            document.getElementById('upload-btn')?.addEventListener('click', () => {
+                document.getElementById('image-upload').click();
+            });
+
+            // --- Event Listeners del Salvapantallas ---
+
+            // Iniciar el conteo al cargar la página
+            resetTimer();
+
+            // Escuchar el movimiento del ratón para reiniciar/ocultar
+            document.addEventListener('mousemove', resetTimer);
+
+            // Escuchar eventos de teclado para reiniciar/ocultar
+            document.addEventListener('keypress', resetTimer);
+
+            // Cargar el video
+            videoPlayer.load();
+
+            console.log(`Salvapaantallas inicializado. Retraso: ${SCREENSAVER_DELAY / 1000} segundos.`);
+        });
+// === SISTEMA SIMPLE DE POPUP MESSENGER ===
+
+// Tus mensajes exactos
+const mensajesMessenger = [
+    { sender: "final_2003", message: "¡Achooo! examen mañana que pereza", time: "16:42" },
+    { sender: "~Carlos~", message: "oye, me puedes pasar las consultas? que no las he hecho XD", time: "17:30" },
+    { sender: "[Klar@~", message: "¿viste lo que puso en su estado? 😱", time: "19:20" },
+    { sender: "Martuki", message: "No apruebo ingles ni pa tras", time: "20:05" },
+    { sender: "[Dani10]", message: "oye, nos comemos unas pipsaaaaa?", time: "20:15" },
+    { sender: "IkeRi0s", message: "¿quieres pelis en dvd? 3 euros cada una, todas las novedades", time: "22:00" },
+    { sender: "modo_emo", message: "¿ya te bajaste el emule? tengo un montón de mp3s", time: "23:45" },
+    { sender: "Juan-ky", message: "me dejas playstation 2 chipeadas", time: "23:45" },
+    { sender: "onlypixels_bot", message: "¡tu contenido maldito está listo! nivel: " + curseLevel, time: "ahora" },
+    { sender: "sistema_msn", message: "Usuario_ha_cambiado_su_estado_a: Conectado y listo para el caos", time: new Date().getHours() + ":" + new Date().getMinutes() }
+];
+
+// Variables de control
+let intervaloPopup;
+let popupVisible = false;
+
+// Inicializar sistema de popups
+function inicializarPopups() {
+    const popup = document.getElementById('popup-messenger');
+    
+    if (!popup) {
+        console.error("Popup no encontrado");
+        return;
+    }
+    
+    // Mostrar primer mensaje después de 10 segundos
+    setTimeout(() => {
+        mostrarPopupAleatorio();
+    }, 10000);
+    
+  
+    programarSiguientePopup();
+    
+    // Cerrar popup al hacer clic en él
+    popup.addEventListener('click', function() {
+        this.classList.remove('mostrar');
+        popupVisible = false;
+        programarSiguientePopup();
     });
 }
 
-/**
- * Oculta el salvapantallas (video) y pausa la reproducción.
- */
-function hideScreensaver() {
-    if (screensaverDiv.classList.contains('active')) {
-        console.log('--- Desactivando Salvapantallas por movimiento ---');
-        screensaverDiv.classList.remove('active');
-        videoPlayer.pause();
-        // Opcional: rebobinar el video al inicio
-        videoPlayer.currentTime = 0; 
+// Mostrar un popup aleatorio
+function mostrarPopupAleatorio() {
+    const popup = document.getElementById('popup-messenger');
+    const remitente = document.getElementById('remitente-popup');
+    const mensaje = document.getElementById('mensaje-popup');
+    const hora = document.getElementById('hora-popup');
+    
+    if (!popup || !remitente || popupVisible) return;
+    
+    // Seleccionar mensaje aleatorio
+    const mensajeAleatorio = mensajesMessenger[Math.floor(Math.random() * mensajesMessenger.length)];
+    
+    // Personalizar mensaje si es necesario
+    let mensajeFinal = mensajeAleatorio.message;
+    if (mensajeAleatorio.sender === "onlypixels_bot") {
+        mensajeFinal = "¡tu contenido maldito está listo! nivel: " + curseLevel;
     }
+    
+    // Actualizar contenido del popup
+    remitente.textContent = mensajeAleatorio.sender + ":";
+    mensaje.textContent = mensajeFinal;
+    
+    // Actualizar hora
+    if (mensajeAleatorio.time === "ahora") {
+        const ahora = new Date();
+        hora.textContent = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
+    } else {
+        hora.textContent = mensajeAleatorio.time;
+    }
+    
+    // Mostrar popup
+    popup.classList.add('mostrar');
+    popupVisible = true;
+    
+    // Reproducir sonido de messenger
+    if (messengerSound) {
+        messengerSound.currentTime = 0;
+        messengerSound.play().catch(e => console.log("Error con sonido"));
+    }
+    
+    // Ocultar automáticamente después de 8 segundos
+    setTimeout(() => {
+        if (popup.classList.contains('mostrar')) {
+            popup.classList.remove('mostrar');
+            popupVisible = false;
+            programarSiguientePopup();
+        }
+    }, 8000);
 }
 
-/**
- * Restablece el temporizador de inactividad. 
- * Se llama cada vez que hay movimiento del ratón o se presiona una tecla.
- */
-function resetTimer() {
-    // 1. Ocultar el salvapantallas si está activo
-    hideScreensaver();
+
+// Programar siguiente popup
+function programarSiguientePopup() {
+    // Limpiar intervalo anterior
+    if (intervaloPopup) {
+        clearTimeout(intervaloPopup);
+    }
     
-    // 2. Limpiar el temporizador anterior
-    clearTimeout(timeoutId);
+    // Tiempo FIJO de 15 segundos
+    const tiempoEspera = 15000; // 15 segundos exactos
     
-    // 3. Establecer un nuevo temporizador
-    timeoutId = setTimeout(showScreensaver, SCREENSAVER_DELAY);
+    // Programar siguiente popup
+    intervaloPopup = setTimeout(() => {
+        mostrarPopupAleatorio();
+    }, tiempoEspera);
+    
+    console.log(`Próximo popup en ${tiempoEspera/1000} segundos`);
 }
 
-// --- Inicialización y Event Listeners ---
+// Mostrar popup especial cuando se genera contenido
+function mostrarPopupContenido() {
+    if (popupVisible) return; // Si ya hay un popup, no mostrar otro
+    
+    const popup = document.getElementById('popup-messenger');
+    const remitente = document.getElementById('remitente-popup');
+    const mensaje = document.getElementById('mensaje-popup');
+    const hora = document.getElementById('hora-popup');
+    
+    if (!popup || !remitente) return;
+    
+    // Mensaje especial para contenido generado
+    remitente.textContent = "onlypixels_bot:";
+    mensaje.textContent = "¡tu contenido maldito está listo! nivel: " + curseLevel;
+    
+    const ahora = new Date();
+    hora.textContent = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
+    
+    // Mostrar popup
+    popup.classList.add('mostrar');
+    popupVisible = true;
+    
+    // Sonido
+    if (messengerSound) {
+        messengerSound.currentTime = 0;
+        messengerSound.play();
+    }
+    
+    // Ocultar después de 6 segundos
+    setTimeout(() => {
+        if (popup.classList.contains('mostrar')) {
+            popup.classList.remove('mostrar');
+            popupVisible = false;
+            programarSiguientePopup();
+        }
+    }, 6000);
+}
 
-// Es fundamental esperar a que el documento se haya cargado completamente 
-// antes de intentar acceder a los elementos del DOM.
-document.addEventListener('DOMContentLoaded', () => {
-    // Llamada inicial para empezar el conteo al cargar la página
-    resetTimer();
+// Modificar generateContent para mostrar popup
+const originalGenerateContent = generateContent;
+generateContent = function() {
+    originalGenerateContent();
+    setTimeout(() => {
+        mostrarPopupContenido();
+    }, 500);
+};
 
-    // Escuchar el movimiento del ratón en todo el documento para reiniciar el temporizador
-    document.addEventListener('mousemove', resetTimer);
+// Modificar worsenContent para mostrar popup
+const originalWorsenContent = worsenContent;
+worsenContent = function() {
+    originalWorsenContent();
+    setTimeout(() => {
+        if (!popupVisible) {
+            const popup = document.getElementById('popup-messenger');
+            const remitente = document.getElementById('remitente-popup');
+            const mensaje = document.getElementById('mensaje-popup');
+            const hora = document.getElementById('hora-popup');
+            
+            if (popup && remitente) {
+                remitente.textContent = "sistema_msn:";
+                mensaje.textContent = "¡ALERTA! Nivel de maldición: " + curseLevel;
+                
+                const ahora = new Date();
+                hora.textContent = ahora.getHours() + ":" + (ahora.getMinutes() < 10 ? '0' : '') + ahora.getMinutes();
+                
+                popup.classList.add('mostrar');
+                popupVisible = true;
+                
+                setTimeout(() => {
+                    if (popup.classList.contains('mostrar')) {
+                        popup.classList.remove('mostrar');
+                        popupVisible = false;
+                        programarSiguientePopup();
+                    }
+                }, 6000);
+            }
+        }
+    }, 500);
+};
 
-    // Escuchar eventos de teclado si quieres que cualquier tecla lo desactive también:
-    document.addEventListener('keypress', resetTimer);
-
-    // Opcional: Pre-cargar el video
-    videoPlayer.load();
-
-    console.log(`Salvapaantallas inicializado. Retraso: ${SCREENSAVER_DELAY / 1000} segundos.`);
+// Inicializar cuando el DOM esté listo
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        inicializarPopups();
+        console.log("✅ Sistema de popups Messenger iniciado");
+    }, 2000);
 });
+
+// Función para forzar un popup (útil para probar)
+window.mostrarPopupPrueba = function() {
+    mostrarPopupAleatorio();
+};

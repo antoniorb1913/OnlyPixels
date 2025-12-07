@@ -34,7 +34,7 @@ header {
 
 h1 {
     text-align: center;
-    font-size: 42px;
+    font-size: 70px;
     margin-bottom: 10px;
     text-shadow: 3px 3px 0 #ff0000, 6px 6px 0 #ff9900, 9px 9px 0 #ffff00, 12px 12px 0 #00ff00, 15px 15px 0 #0000ff, 18px 18px 0 #4b0082, 21px 21px 0 #8f00ff;
     color: #ff00ff;
@@ -475,4 +475,75 @@ button:hover, select:hover, input:hover {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+/* === POPUP MESSENGER SIMPLE === */
+.popup-messenger {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background: #caeeec;
+    color: rgb(0, 0, 0);
+    padding: 10px;
+    border: 5px solid #cfd686;
+    border-radius: 8px;
+    font-family: "Arial", sans-serif;
+    font-size: 13px;
+    z-index: 1000;
+    display: none;
+    box-shadow: 3px 3px 5px rgba(0,0,0,0.3);
+}
+
+.popup-messenger.mostrar {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.logo-messenger-popup {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+}
+
+.logo-messenger-popup img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.contenido-popup {
+    flex: 1;
+}
+
+.remitente-popup {
+    font-weight: bold;
+    color: #000000;
+    margin-bottom: 5px;
+    font-size: 14px;
+}
+
+.mensaje-popup {
+    margin-bottom: 5px;
+    line-height: 1.4;
+}
+
+.hora-popup {
+    font-size: 11px;
+    color: #000000;
+    text-align: right;
+}
+
+/* Mini título arriba del logo */
+.titulo-messenger {
+    position: absolute;
+    top: -25px;
+    left: 0;
+    background: #ffffbd;
+    color: rgb(0, 0, 0);
+    padding: 3px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    white-space: nowrap;
 }

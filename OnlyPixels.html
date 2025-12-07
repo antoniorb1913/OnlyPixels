@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OnlyPixels - Generador de Imágenes Malditas</title>
     <link href="estilos/estilos.css" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
+
 
 </head>
 <body>
@@ -65,15 +65,31 @@
 
     <!-- Sonidos -->
     <audio id="error-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-windows-error-2576.mp3" preload="auto"></audio>
-    <audio id="messenger-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-message-pop-alert-2354.mp3" preload="auto"></audio>
+    <audio id="messenger-sound" src="sonido/tono_messenger.mp3" preload="auto"></audio>
+    <audio id="imagen-sound" src="sonido/virus.mp3" preload="auto"></audio>
+    <audio id="nokia-sound" src="sonido/nokia.mp3" preload="auto"></audio>
+    <audio id="esp-sound" src="sonido/esp.mp3" preload="auto"></audio>
+    <audio id="tama-sound" src="sonido/tama.mp3" preload="auto"></audio>
     <audio id="disco-sound" src="https://assets.mixkit.co/sfx/preview/mixkit-game-show-extra-bonus-2063.mp3" preload="auto"></audio>
+   <!-- Popup Messenger Simple con Logo -->
+<div id="popup-messenger" class="popup-messenger">
+    <div class="logo-messenger-popup">
+        <img src="imagenes/logo_messenger.png" alt="Messenger Logo">
+        <div class="titulo-messenger">Windows Live</div>
+    </div>
+    <div class="contenido-popup">
+        <div class="remitente-popup" id="remitente-popup">final_2003:</div>
+        <div class="mensaje-popup" id="mensaje-popup">¡Achooo! examen mañana que pereza</div>
+        <div class="hora-popup" id="hora-popup">16:42</div>
+    </div>
+</div>
     <div id="video-screensaver">
         <video id="screensaver-video-player" loop muted playsinline>
 
             <source src="imagenes/carlos.mp4" type="video/mp4">
             Tu navegador no soporta la etiqueta de video.
         </video>
-    <script src="OnlyPixels.js"></script>
+    <script src="js/OnlyPixels.js"></script>
  <!-- 
         *** Contenedor del Salvapantallas (Tu video) ***
         Este debe estar al final del body para no interferir con el contenido normal.
@@ -88,114 +104,6 @@
             Tu navegador no soporta la etiqueta de video.
         </video>
     </div>
-
-    <!-- 
-        *** Lógica JavaScript (Corregida y Integrada) ***
-        Toda la lógica del salvapantallas se ha movido dentro de DOMContentLoaded.
-        He añadido funciones dummy para los botones de tu app para evitar errores.
-    -->
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const SCREENSAVER_DELAY = 5000; // 5000 milisegundos = 5 segundos
-            let timeoutId;
-
-            // CRÍTICO: Las referencias al DOM se obtienen AHORA, después de que los elementos se han cargado.
-            const screensaverDiv = document.getElementById('video-screensaver');
-            const videoPlayer = document.getElementById('screensaver-video-player');
-            const notification = document.getElementById('notification');
-            const saveSound = document.getElementById('messenger-sound');
-            
-            // Comprobación de existencia para evitar errores si algo falla
-            if (!screensaverDiv || !videoPlayer) {
-                console.error("Error: Elementos de video/salvapantallas no encontrados.");
-                return; 
-            }
-
-            /**
-             * Muestra el salvapantallas (video) y lo reproduce.
-             */
-            function showScreensaver() {
-                console.log('--- Activando Salvapantallas ---');
-                screensaverDiv.classList.add('active');
-                // Intentar reproducir el video.
-                videoPlayer.play().catch(error => {
-                    console.error('Error al intentar reproducir el video:', error);
-                });
-            }
-
-            /**
-             * Oculta el salvapantallas (video) y pausa la reproducción.
-             */
-            function hideScreensaver() {
-                if (screensaverDiv.classList.contains('active')) {
-                    console.log('--- Desactivando Salvapantallas por movimiento ---');
-                    screensaverDiv.classList.remove('active');
-                    videoPlayer.pause();
-                    videoPlayer.currentTime = 0; 
-                }
-            }
-
-            /**
-             * Restablece el temporizador de inactividad. 
-             */
-            function resetTimer() {
-                // 1. Ocultar el salvapantallas si está activo
-                hideScreensaver();
-                
-                // 2. Limpiar el temporizador anterior
-                clearTimeout(timeoutId);
-                
-                // 3. Establecer un nuevo temporizador
-                timeoutId = setTimeout(showScreensaver, SCREENSAVER_DELAY);
-            }
-
-            // --- Lógica de la Aplicación (Funciones Dummy para los botones) ---
-
-            // Función para mostrar la notificación de guardado
-            function showNotification() {
-                saveSound.play().catch(e => console.log("Error playing sound: ", e));
-                notification.classList.add('show');
-                setTimeout(() => {
-                    notification.classList.remove('show');
-                }, 3000);
-            }
-
-            // Asignar Event Listeners a los botones (para que tu app no de errores)
-            document.getElementById('generate-btn')?.addEventListener('click', () => {
-                document.getElementById('generated-text').textContent = "¡Contenido absurdo generado con nivel de maldición " + document.getElementById('curse-level').value + "!";
-            });
-            
-            document.getElementById('worsen-btn')?.addEventListener('click', () => {
-                document.getElementById('generated-text').textContent = "¡Todo empeora! 📉";
-            });
-
-            document.getElementById('save-btn')?.addEventListener('click', showNotification);
-
-            document.getElementById('mode-2003-btn')?.addEventListener('click', () => {
-                alert('¡Modo 2003 activado! (Simulado)');
-            });
-
-            // Lógica para el botón de subir imagen
-            document.getElementById('upload-btn')?.addEventListener('click', () => {
-                 document.getElementById('image-upload').click();
-            });
-
-            // --- Event Listeners del Salvapantallas ---
-
-            // Iniciar el conteo al cargar la página
-            resetTimer();
-
-            // Escuchar el movimiento del ratón para reiniciar/ocultar
-            document.addEventListener('mousemove', resetTimer);
-
-            // Escuchar eventos de teclado para reiniciar/ocultar
-            document.addEventListener('keypress', resetTimer);
-
-            // Cargar el video
-            videoPlayer.load();
-
-            console.log(`Salvapaantallas inicializado. Retraso: ${SCREENSAVER_DELAY / 1000} segundos.`);
-        });
-    </script>
+        
 </body>
 </html>
