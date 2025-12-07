@@ -25,7 +25,7 @@ let uploadedImage = null;
 const curseLevelSelect = document.getElementById('curse-level');
 const generateBtn = document.getElementById('generate-btn');
 const worsenBtn = document.getElementById('worsen-btn');
-const saveBtn = document.getElementById('save-btn');
+
 const mode2003Btn = document.getElementById('mode-2003-btn');
 const imageUpload = document.getElementById('image-upload');
 const contentArea = document.getElementById('content-area');
@@ -46,7 +46,7 @@ const discoSound = document.getElementById('disco-sound');
 curseLevelSelect.addEventListener('change', updateCurseLevel);
 generateBtn.addEventListener('click', generateContent);
 worsenBtn.addEventListener('click', worsenContent);
-saveBtn.addEventListener('click', saveContent);
+
 mode2003Btn.addEventListener('click', toggle2003Mode);
 imageUpload.addEventListener('change', handleImageUpload);
 document.addEventListener('keydown', handleKonamiCode);
@@ -286,20 +286,6 @@ function worsenContent() {
     generateEmojis();
     
     tamaSound.play();
-}
-
-function saveContent() {
-    // Mostrar notificación
-    showNotification('¡Contenido guardado en la memoria cósmica!');
-    
-    // Reproducir sonido de error
-    errorSound.play();
-    
-    // Efecto visual adicional
-    contentArea.style.transform = 'scale(0.95)';
-    setTimeout(() => {
-        contentArea.style.transform = 'scale(1)';
-    }, 200);
 }
 
 function showNotification(message) {
