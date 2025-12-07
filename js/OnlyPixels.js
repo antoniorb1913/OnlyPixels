@@ -101,21 +101,11 @@ function generateRandomImage() {
     
     // Lista de imágenes locales en tu carpeta
     const localImages = [
-<<<<<<< HEAD
         'maldito1.png',
         'maldito2.png',
         'maldito3.png',
         'maldito4.png',
         'maldito5.png'
-=======
-        'carlos.jpg',
-        'antonio.jpg',
-        'final.jpg',
-        'perro.jpeg',
-        'xp.jpg',
-        'logo_messenger.png',
-        'odin.jpg'
->>>>>>> 033e7cfeb5ba18a9b88490e11304b87ce4d9ba5d
     ];
     
     // Seleccionar una imagen aleatoria de la lista
@@ -554,7 +544,7 @@ function inicializarPopups() {
         mostrarPopupAleatorio();
     }, 10000);
     
-  
+
     programarSiguientePopup();
     
     // Cerrar popup al hacer clic en él
