@@ -12,7 +12,7 @@ const frases = [
     "El cargador USB alimenta esperanzas perdidas"
 ];
 
-const emojis = ["😀", "😂", "🤣", "😍", "🤔", "🙄", "😎", "🥳", "😱", "👻", "💀", "👾", "🤖", "🎃", "💩", "👁️", "🧠"];
+const emojis = ["🫣", "☠️", "⚰️", "🧟", "🤔", "🙄", "👹", "😰", "😱", "👻", "💀", "👾", "🤖", "🎃", "🐦‍⬛", "👁️", "🧠"];
 
 // Variables de estado
 let nivelMaldicion = 5;
@@ -102,7 +102,8 @@ function generarImagenAleatoria() {
         'maldito2.png',
         'maldito3.png',
         'maldito4.png',
-        'maldito5.png'
+        'maldito5.png',
+        'maldito6.png'
     ];
     
     // Seleccionar una imagen aleatoria de la lista
