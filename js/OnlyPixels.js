@@ -103,7 +103,8 @@ function generarImagenAleatoria() {
         'maldito3.png',
         'maldito4.png',
         'maldito5.png',
-        'maldito6.png'
+        'maldito6.png',
+        'maldito7.png'
     ];
     
     // Seleccionar una imagen aleatoria de la lista
@@ -508,14 +509,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Array de mensajes predefinidos para los popups
 const mensajesMessenger = [
-    { remitente: "final_2003", mensaje: "¡Achooo! estos no saben hacer un puto examen bien", hora: "16:42" },
-    { remitente: "~Carlos~", mensaje: "me cago en los de marketing, k no les voy a pintar el puto boton de mierda", hora: "17:30" },
-    { remitente: "[Klar@~", mensaje: "a mi k mierda me importa, yo aprendi en foros", hora: "19:20" },
-    { remitente: "Martuki", mensaje: "FUCK...", hora: "20:05" },
-    { remitente: "[Dani10]", mensaje: "oye, nos comemos la puta pipsaaaaa o k?", hora: "20:15" },
-    { remitente: "IkeRi0s", mensaje: "¿quieres pelis en dvd? 30 euros cada una, si no te gusta te jodes", hora: "22:00" },
-    { remitente: "modo_emo", mensaje: "¿ya te bajaste la pelicula del emule? yo tengo ya 3 xxx", hora: "23:45" },
-    { remitente: "Juan-ky", mensaje: "k no te voy a devolver la playstation 2 chipeadas", hora: "23:45" },
+    { remitente: "final_2003", mensaje: "¡Achooo! estos no saben hacer un puto examen bien 🦆", hora: "16:42" },
+    { remitente: "@ntonio_J0se", mensaje: "⚽ Hoy sale a jugar pedri, lamine, raphinha ....", hora: "17:10" },
+    { remitente: "~Carlos~", mensaje: "me cago en los de marketing, k no les voy a pintar el puto boton de mierda 💩", hora: "17:30" },
+    { remitente: "[Klar@~", mensaje: "a mi k mierda me importa, yo aprendi en foros 📄😡​", hora: "19:20" },
+    { remitente: "Martuki", mensaje: "📢 FUCK...", hora: "20:05" },
+    { remitente: "[Dani10]", mensaje: "oye, nos comemos la puta pipsaaaaa🍕 o k?", hora: "20:15" },
+    { remitente: "~R@keL~", mensaje: "y recuerda, cafe y cigarro muñeco de barro", hora: "21:45" },
+    { remitente: "IkeRi0s", mensaje: "¿quieres pelis en dvd 💿​? 30 euros cada una, si no te gusta te jodes", hora: "22:00" },
+    { remitente: "cIpri_aPi", mensaje: "vale? 🌐", hora: "22:35" },
+    { remitente: "modo_emo", mensaje: "¿ya te bajaste la pelicula del emule? yo tengo ya 3 xxx 🙄​", hora: "23:45" },
+    { remitente: "Juan-ky", mensaje: "🫵​ k no te voy a devolver la playstation 2 chipeadas", hora: "23:45" },
     { remitente: "onlypixels_bot", mensaje: "¡tu contenido maldito está listo! nivel: " + nivelMaldicion, hora: "ahora" },
     { remitente: "sistema_msn", mensaje: "Usuario_ha_cambiado_su_estado_a: Conectado y listo para el caos", hora: new Date().getHours() + ":" + new Date().getMinutes() }
 ];
